@@ -12,7 +12,7 @@ Godot Catalyst gives you 240+ MCP tools for driving the Godot 4.x editor and ins
 
 ## Tool categories (39)
 
-Scene, Node, Script, Resource, Editor, Project, Signal, Build, Manipulation2D, Manipulation3D, Animation, Audio, Physics, Navigation, Shader, Theme, Particle, Tilemap, File (offline parsing), LSP, Debug, Batch, Docs, Input, Profiling, Runtime, Asset (CC0 search), AIAsset, AssetPipeline, Spatial, Convention, Analysis, Plugin, Networking, Localization, VisualTesting, Visualization, Testing.
+Foundation (status/ping), Scene, Node, Script, Resource, Editor, Project, Signal, Build, Manipulation2D, Manipulation3D, Animation, Audio, Physics, Navigation, Shader, Theme, Particle, Tilemap, File (offline parsing), LSP, Debug, Batch, Docs, Input, Profiling, Runtime, Asset (CC0 search), AIAsset, AssetPipeline, Spatial, Convention, Analysis, Plugin, Networking, Localization, VisualTesting, Visualization, Testing.
 
 The full tool list with schemas lives in the private repo at `x:/source/repos/godot-catalyst/src/tools/` — one file per category.
 
