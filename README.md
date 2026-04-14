@@ -11,7 +11,7 @@ MCP server for [Godot 4.x](https://godotengine.org/) game development. 240+ tool
 | Feature | Godot Catalyst | GoPeak | godot-mcp-pro | Coding-Solo |
 |---------|:-:|:-:|:-:|:-:|
 | **Total tools** | **240+** | 110 | 169 | 15 |
-| **Price** | **$25** | Free | $5 | Free |
+| **Price** | **$25** | Free | $15 | Free |
 | **LSP code intelligence** | Yes | Yes | No | No |
 | **DAP debugging** | Yes | Yes | No | No |
 | **Offline file parsing** | Yes | No | No | No |
