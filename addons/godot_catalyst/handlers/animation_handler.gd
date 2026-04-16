@@ -73,8 +73,8 @@ func create(params: Dictionary) -> Dictionary:
 
 	var ur := EditorInterface.get_editor_undo_redo()
 	ur.create_action("Create animation '%s'" % anim_name)
-	ur.add_do_method(lib.add_animation.bind(anim_name, anim))
-	ur.add_undo_method(lib.remove_animation.bind(anim_name))
+	ur.add_do_method(lib, "add_animation", anim_name, anim)
+	ur.add_undo_method(lib, "remove_animation", anim_name)
 	ur.commit_action()
 
 	return {
@@ -111,8 +111,8 @@ func delete(params: Dictionary) -> Dictionary:
 
 	var ur := EditorInterface.get_editor_undo_redo()
 	ur.create_action("Delete animation '%s'" % anim_name)
-	ur.add_do_method(lib.remove_animation.bind(anim_name))
-	ur.add_undo_method(lib.add_animation.bind(anim_name, anim))
+	ur.add_do_method(lib, "remove_animation", anim_name)
+	ur.add_undo_method(lib, "add_animation", anim_name, anim)
 	ur.commit_action()
 
 	return {
@@ -375,10 +375,10 @@ func setup_tree(params: Dictionary) -> Dictionary:
 	var scene_root := _get_scene_root()
 	var ur := EditorInterface.get_editor_undo_redo()
 	ur.create_action("Create AnimationTree '%s'" % tree.name)
-	ur.add_do_method(parent.add_child.bind(tree))
-	ur.add_do_method(tree.set_owner.bind(scene_root))
+	ur.add_do_method(parent, "add_child", tree)
+	ur.add_do_method(tree, "set_owner", scene_root)
 	ur.add_do_reference(tree)
-	ur.add_undo_method(parent.remove_child.bind(tree))
+	ur.add_undo_method(parent, "remove_child", tree)
 	ur.commit_action()
 
 	return {

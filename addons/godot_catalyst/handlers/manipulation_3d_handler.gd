@@ -46,10 +46,10 @@ func add_mesh(params: Dictionary) -> Dictionary:
 	var scene_root := _get_scene_root()
 	var ur := EditorInterface.get_editor_undo_redo()
 	ur.create_action("Create MeshInstance3D '%s'" % node_name)
-	ur.add_do_method(parent.add_child.bind(instance))
-	ur.add_do_method(instance.set_owner.bind(scene_root))
+	ur.add_do_method(parent, "add_child", instance)
+	ur.add_do_method(instance, "set_owner", scene_root)
 	ur.add_do_reference(instance)
-	ur.add_undo_method(parent.remove_child.bind(instance))
+	ur.add_undo_method(parent, "remove_child", instance)
 	ur.commit_action()
 
 	return {
@@ -98,8 +98,8 @@ func set_material(params: Dictionary) -> Dictionary:
 	if node is MeshInstance3D:
 		var mesh_inst: MeshInstance3D = node
 		var old_mat := mesh_inst.get_surface_override_material(0)
-		ur.add_do_method(mesh_inst.set_surface_override_material.bind(0, mat))
-		ur.add_undo_method(mesh_inst.set_surface_override_material.bind(0, old_mat))
+		ur.add_do_method(mesh_inst, "set_surface_override_material", 0, mat)
+		ur.add_undo_method(mesh_inst, "set_surface_override_material", 0, old_mat)
 	elif node is CSGShape3D:
 		var csg: CSGShape3D = node
 		var old_mat: Variant = csg.material
@@ -158,10 +158,10 @@ func setup_lighting(params: Dictionary) -> Dictionary:
 	var scene_root := _get_scene_root()
 	var ur := EditorInterface.get_editor_undo_redo()
 	ur.create_action("Create %s '%s'" % [light.get_class(), light.name])
-	ur.add_do_method(parent.add_child.bind(light))
-	ur.add_do_method(light.set_owner.bind(scene_root))
+	ur.add_do_method(parent, "add_child", light)
+	ur.add_do_method(light, "set_owner", scene_root)
 	ur.add_do_reference(light)
-	ur.add_undo_method(parent.remove_child.bind(light))
+	ur.add_undo_method(parent, "remove_child", light)
 	ur.commit_action()
 
 	return {
@@ -251,10 +251,10 @@ func setup_environment(params: Dictionary) -> Dictionary:
 	var scene_root := _get_scene_root()
 	var ur := EditorInterface.get_editor_undo_redo()
 	ur.create_action("Create WorldEnvironment '%s'" % world_env.name)
-	ur.add_do_method(parent.add_child.bind(world_env))
-	ur.add_do_method(world_env.set_owner.bind(scene_root))
+	ur.add_do_method(parent, "add_child", world_env)
+	ur.add_do_method(world_env, "set_owner", scene_root)
 	ur.add_do_reference(world_env)
-	ur.add_undo_method(parent.remove_child.bind(world_env))
+	ur.add_undo_method(parent, "remove_child", world_env)
 	ur.commit_action()
 
 	return {
@@ -288,10 +288,10 @@ func add_gridmap(params: Dictionary) -> Dictionary:
 	var scene_root := _get_scene_root()
 	var ur := EditorInterface.get_editor_undo_redo()
 	ur.create_action("Create GridMap '%s'" % gridmap.name)
-	ur.add_do_method(parent.add_child.bind(gridmap))
-	ur.add_do_method(gridmap.set_owner.bind(scene_root))
+	ur.add_do_method(parent, "add_child", gridmap)
+	ur.add_do_method(gridmap, "set_owner", scene_root)
 	ur.add_do_reference(gridmap)
-	ur.add_undo_method(parent.remove_child.bind(gridmap))
+	ur.add_undo_method(parent, "remove_child", gridmap)
 	ur.commit_action()
 
 	return {
@@ -363,10 +363,10 @@ func create_csg(params: Dictionary) -> Dictionary:
 	var scene_root := _get_scene_root()
 	var ur := EditorInterface.get_editor_undo_redo()
 	ur.create_action("Create %s '%s'" % [csg.get_class(), csg.name])
-	ur.add_do_method(parent.add_child.bind(csg))
-	ur.add_do_method(csg.set_owner.bind(scene_root))
+	ur.add_do_method(parent, "add_child", csg)
+	ur.add_do_method(csg, "set_owner", scene_root)
 	ur.add_do_reference(csg)
-	ur.add_undo_method(parent.remove_child.bind(csg))
+	ur.add_undo_method(parent, "remove_child", csg)
 	ur.commit_action()
 
 	return {
@@ -397,10 +397,10 @@ func setup_skeleton(params: Dictionary) -> Dictionary:
 		var scene_root := _get_scene_root()
 		var ur := EditorInterface.get_editor_undo_redo()
 		ur.create_action("Create Skeleton3D '%s'" % skeleton.name)
-		ur.add_do_method(parent.add_child.bind(skeleton))
-		ur.add_do_method(skeleton.set_owner.bind(scene_root))
+		ur.add_do_method(parent, "add_child", skeleton)
+		ur.add_do_method(skeleton, "set_owner", scene_root)
 		ur.add_do_reference(skeleton)
-		ur.add_undo_method(parent.remove_child.bind(skeleton))
+		ur.add_undo_method(parent, "remove_child", skeleton)
 		ur.commit_action()
 
 	var added_bones := []
@@ -466,10 +466,10 @@ func create_multimesh(params: Dictionary) -> Dictionary:
 	var scene_root := _get_scene_root()
 	var ur := EditorInterface.get_editor_undo_redo()
 	ur.create_action("Create MultiMeshInstance3D '%s'" % mm_instance.name)
-	ur.add_do_method(parent.add_child.bind(mm_instance))
-	ur.add_do_method(mm_instance.set_owner.bind(scene_root))
+	ur.add_do_method(parent, "add_child", mm_instance)
+	ur.add_do_method(mm_instance, "set_owner", scene_root)
 	ur.add_do_reference(mm_instance)
-	ur.add_undo_method(parent.remove_child.bind(mm_instance))
+	ur.add_undo_method(parent, "remove_child", mm_instance)
 	ur.commit_action()
 
 	return {
@@ -514,10 +514,10 @@ func setup_occlusion(params: Dictionary) -> Dictionary:
 	var scene_root := _get_scene_root()
 	var ur := EditorInterface.get_editor_undo_redo()
 	ur.create_action("Create OccluderInstance3D '%s'" % occluder_instance.name)
-	ur.add_do_method(parent.add_child.bind(occluder_instance))
-	ur.add_do_method(occluder_instance.set_owner.bind(scene_root))
+	ur.add_do_method(parent, "add_child", occluder_instance)
+	ur.add_do_method(occluder_instance, "set_owner", scene_root)
 	ur.add_do_reference(occluder_instance)
-	ur.add_undo_method(parent.remove_child.bind(occluder_instance))
+	ur.add_undo_method(parent, "remove_child", occluder_instance)
 	ur.commit_action()
 
 	return {

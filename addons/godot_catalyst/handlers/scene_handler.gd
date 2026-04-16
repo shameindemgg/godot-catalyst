@@ -68,7 +68,8 @@ func save(params: Dictionary) -> Dictionary:
 	if path.is_empty():
 		err = EditorInterface.save_scene()
 	else:
-		err = EditorInterface.save_scene_as(path)
+		EditorInterface.save_scene_as(path)
+		err = OK
 
 	if err != OK:
 		return _error(-32008, "Failed to save scene: %s" % error_string(err))
@@ -86,7 +87,8 @@ func save_as(params: Dictionary) -> Dictionary:
 	if not DirAccess.dir_exists_absolute(dir_path):
 		DirAccess.make_dir_recursive_absolute(dir_path)
 
-	var err := EditorInterface.save_scene_as(path)
+	EditorInterface.save_scene_as(path)
+	var err: Error = OK
 	if err != OK:
 		return _error(-32008, "Failed to save scene as '%s': %s" % [path, error_string(err)])
 

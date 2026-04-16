@@ -106,8 +106,8 @@ func attach(params: Dictionary) -> Dictionary:
 	var ur := EditorInterface.get_editor_undo_redo()
 	var old_script := node.get_script()
 	ur.create_action("Attach script to '%s'" % node.name)
-	ur.add_do_method(node.set_script.bind(script))
-	ur.add_undo_method(node.set_script.bind(old_script))
+	ur.add_do_method(node, "set_script", script)
+	ur.add_undo_method(node, "set_script", old_script)
 	ur.commit_action()
 
 	return {"success": true, "node": node_path, "script": script_path, "message": "Attached '%s' to '%s'" % [script_path, node.name]}
@@ -126,8 +126,8 @@ func detach(params: Dictionary) -> Dictionary:
 
 	var ur := EditorInterface.get_editor_undo_redo()
 	ur.create_action("Detach script from '%s'" % node.name)
-	ur.add_do_method(node.set_script.bind(null))
-	ur.add_undo_method(node.set_script.bind(old_script))
+	ur.add_do_method(node, "set_script", null)
+	ur.add_undo_method(node, "set_script", old_script)
 	ur.commit_action()
 
 	return {"success": true, "node": node_path, "message": "Detached script from '%s'" % node.name}

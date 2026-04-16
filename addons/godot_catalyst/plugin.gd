@@ -57,7 +57,7 @@ func _on_request_received(peer_id: int, id: String, method: String, params: Dict
 		return
 
 	# Dispatch to tool executor
-	var result := _tool_executor.execute(method, params)
+	var result: Dictionary = _tool_executor.execute(method, params)
 	if result.has("error"):
 		_mcp_server.send_error(peer_id, id, result["error"]["code"], result["error"]["message"], result["error"].get("data"))
 	else:

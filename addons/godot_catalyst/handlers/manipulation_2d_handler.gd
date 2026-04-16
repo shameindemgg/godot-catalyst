@@ -39,10 +39,10 @@ func create_sprite(params: Dictionary) -> Dictionary:
 	var scene_root := _get_scene_root()
 	var ur := EditorInterface.get_editor_undo_redo()
 	ur.create_action("Create Sprite2D '%s'" % node_name)
-	ur.add_do_method(parent.add_child.bind(sprite))
-	ur.add_do_method(sprite.set_owner.bind(scene_root))
+	ur.add_do_method(parent, "add_child", sprite)
+	ur.add_do_method(sprite, "set_owner", scene_root)
 	ur.add_do_reference(sprite)
-	ur.add_undo_method(parent.remove_child.bind(sprite))
+	ur.add_undo_method(parent, "remove_child", sprite)
 	ur.commit_action()
 
 	return {
@@ -91,10 +91,10 @@ func setup_collision(params: Dictionary) -> Dictionary:
 	var scene_root := _get_scene_root()
 	var ur := EditorInterface.get_editor_undo_redo()
 	ur.create_action("Add CollisionShape2D to '%s'" % body.name)
-	ur.add_do_method(body.add_child.bind(collision))
-	ur.add_do_method(collision.set_owner.bind(scene_root))
+	ur.add_do_method(body, "add_child", collision)
+	ur.add_do_method(collision, "set_owner", scene_root)
 	ur.add_do_reference(collision)
-	ur.add_undo_method(body.remove_child.bind(collision))
+	ur.add_undo_method(body, "remove_child", collision)
 	ur.commit_action()
 
 	return {
@@ -129,10 +129,10 @@ func create_tilemap(params: Dictionary) -> Dictionary:
 	var scene_root := _get_scene_root()
 	var ur := EditorInterface.get_editor_undo_redo()
 	ur.create_action("Create TileMapLayer '%s'" % node_name)
-	ur.add_do_method(parent.add_child.bind(tilemap))
-	ur.add_do_method(tilemap.set_owner.bind(scene_root))
+	ur.add_do_method(parent, "add_child", tilemap)
+	ur.add_do_method(tilemap, "set_owner", scene_root)
 	ur.add_do_reference(tilemap)
-	ur.add_undo_method(parent.remove_child.bind(tilemap))
+	ur.add_undo_method(parent, "remove_child", tilemap)
 	ur.commit_action()
 
 	return {
@@ -236,12 +236,12 @@ func create_area(params: Dictionary) -> Dictionary:
 	var scene_root := _get_scene_root()
 	var ur := EditorInterface.get_editor_undo_redo()
 	ur.create_action("Create Area2D '%s'" % node_name)
-	ur.add_do_method(parent.add_child.bind(area))
-	ur.add_do_method(area.set_owner.bind(scene_root))
-	ur.add_do_method(area.add_child.bind(collision))
-	ur.add_do_method(collision.set_owner.bind(scene_root))
+	ur.add_do_method(parent, "add_child", area)
+	ur.add_do_method(area, "set_owner", scene_root)
+	ur.add_do_method(area, "add_child", collision)
+	ur.add_do_method(collision, "set_owner", scene_root)
 	ur.add_do_reference(area)
-	ur.add_undo_method(parent.remove_child.bind(area))
+	ur.add_undo_method(parent, "remove_child", area)
 	ur.commit_action()
 
 	return {
@@ -268,8 +268,8 @@ func setup_parallax(params: Dictionary) -> Dictionary:
 	var scene_root := _get_scene_root()
 	var ur := EditorInterface.get_editor_undo_redo()
 	ur.create_action("Create ParallaxBackground with %d layers" % layers.size())
-	ur.add_do_method(parent.add_child.bind(bg))
-	ur.add_do_method(bg.set_owner.bind(scene_root))
+	ur.add_do_method(parent, "add_child", bg)
+	ur.add_do_method(bg, "set_owner", scene_root)
 	ur.add_do_reference(bg)
 
 	for i in range(layers.size()):
@@ -282,8 +282,8 @@ func setup_parallax(params: Dictionary) -> Dictionary:
 		if layer_data.has("mirroring"):
 			layer.motion_mirroring = CatalystTypeConverter.json_to_variant(layer_data["mirroring"])
 
-		ur.add_do_method(bg.add_child.bind(layer))
-		ur.add_do_method(layer.set_owner.bind(scene_root))
+		ur.add_do_method(bg, "add_child", layer)
+		ur.add_do_method(layer, "set_owner", scene_root)
 
 		if layer_data.has("texture"):
 			var tex_path: String = layer_data["texture"]
@@ -293,10 +293,10 @@ func setup_parallax(params: Dictionary) -> Dictionary:
 					var sprite := Sprite2D.new()
 					sprite.texture = tex
 					sprite.name = "Sprite2D"
-					ur.add_do_method(layer.add_child.bind(sprite))
-					ur.add_do_method(sprite.set_owner.bind(scene_root))
+					ur.add_do_method(layer, "add_child", sprite)
+					ur.add_do_method(sprite, "set_owner", scene_root)
 
-	ur.add_undo_method(parent.remove_child.bind(bg))
+	ur.add_undo_method(parent, "remove_child", bg)
 	ur.commit_action()
 
 	return {
@@ -331,10 +331,10 @@ func create_line(params: Dictionary) -> Dictionary:
 	var scene_root := _get_scene_root()
 	var ur := EditorInterface.get_editor_undo_redo()
 	ur.create_action("Create Line2D '%s'" % line.name)
-	ur.add_do_method(parent.add_child.bind(line))
-	ur.add_do_method(line.set_owner.bind(scene_root))
+	ur.add_do_method(parent, "add_child", line)
+	ur.add_do_method(line, "set_owner", scene_root)
 	ur.add_do_reference(line)
-	ur.add_undo_method(parent.remove_child.bind(line))
+	ur.add_undo_method(parent, "remove_child", line)
 	ur.commit_action()
 
 	return {
@@ -370,10 +370,10 @@ func create_polygon(params: Dictionary) -> Dictionary:
 	var scene_root := _get_scene_root()
 	var ur := EditorInterface.get_editor_undo_redo()
 	ur.create_action("Create Polygon2D '%s'" % polygon.name)
-	ur.add_do_method(parent.add_child.bind(polygon))
-	ur.add_do_method(polygon.set_owner.bind(scene_root))
+	ur.add_do_method(parent, "add_child", polygon)
+	ur.add_do_method(polygon, "set_owner", scene_root)
 	ur.add_do_reference(polygon)
-	ur.add_undo_method(parent.remove_child.bind(polygon))
+	ur.add_undo_method(parent, "remove_child", polygon)
 	ur.commit_action()
 
 	return {

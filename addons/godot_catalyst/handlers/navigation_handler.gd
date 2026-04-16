@@ -35,10 +35,10 @@ func setup_region(params: Dictionary) -> Dictionary:
 	var scene_root := _get_scene_root()
 	var ur := EditorInterface.get_editor_undo_redo()
 	ur.create_action("Create NavigationRegion%s" % dimension.to_upper())
-	ur.add_do_method(parent.add_child.bind(node))
-	ur.add_do_method(node.set_owner.bind(scene_root))
+	ur.add_do_method(parent, "add_child", node)
+	ur.add_do_method(node, "set_owner", scene_root)
 	ur.add_do_reference(node)
-	ur.add_undo_method(parent.remove_child.bind(node))
+	ur.add_undo_method(parent, "remove_child", node)
 	ur.commit_action()
 
 	return {

@@ -37,10 +37,10 @@ func create(params: Dictionary) -> Dictionary:
 	# Add via undo/redo
 	var ur := EditorInterface.get_editor_undo_redo()
 	ur.create_action("Create %s '%s'" % [node_type, node.name])
-	ur.add_do_method(parent.add_child.bind(node))
-	ur.add_do_method(node.set_owner.bind(_get_scene_root()))
+	ur.add_do_method(parent, "add_child", node)
+	ur.add_do_method(node, "set_owner", _get_scene_root())
 	ur.add_do_reference(node)
-	ur.add_undo_method(parent.remove_child.bind(node))
+	ur.add_undo_method(parent, "remove_child", node)
 	ur.commit_action()
 
 	return {
@@ -66,9 +66,9 @@ func delete(params: Dictionary) -> Dictionary:
 	var parent := node.get_parent()
 	var ur := EditorInterface.get_editor_undo_redo()
 	ur.create_action("Delete '%s'" % node.name)
-	ur.add_do_method(parent.remove_child.bind(node))
-	ur.add_undo_method(parent.add_child.bind(node))
-	ur.add_undo_method(node.set_owner.bind(scene_root))
+	ur.add_do_method(parent, "remove_child", node)
+	ur.add_undo_method(parent, "add_child", node)
+	ur.add_undo_method(node, "set_owner", scene_root)
 	ur.add_undo_reference(node)
 	ur.commit_action()
 
@@ -116,15 +116,15 @@ func move(params: Dictionary) -> Dictionary:
 
 	var ur := EditorInterface.get_editor_undo_redo()
 	ur.create_action("Move '%s' to '%s'" % [node.name, new_parent_path])
-	ur.add_do_method(old_parent.remove_child.bind(node))
-	ur.add_do_method(new_parent.add_child.bind(node))
+	ur.add_do_method(old_parent, "remove_child", node)
+	ur.add_do_method(new_parent, "add_child", node)
 	if index >= 0:
-		ur.add_do_method(new_parent.move_child.bind(node, index))
-	ur.add_do_method(node.set_owner.bind(scene_root))
-	ur.add_undo_method(new_parent.remove_child.bind(node))
-	ur.add_undo_method(old_parent.add_child.bind(node))
-	ur.add_undo_method(old_parent.move_child.bind(node, old_index))
-	ur.add_undo_method(node.set_owner.bind(scene_root))
+		ur.add_do_method(new_parent, "move_child", node, index)
+	ur.add_do_method(node, "set_owner", scene_root)
+	ur.add_undo_method(new_parent, "remove_child", node)
+	ur.add_undo_method(old_parent, "add_child", node)
+	ur.add_undo_method(old_parent, "move_child", node, old_index)
+	ur.add_undo_method(node, "set_owner", scene_root)
 	ur.commit_action()
 
 	return {"success": true, "new_path": str(node.get_path()), "message": "Moved '%s' to '%s'" % [node.name, new_parent_path]}
@@ -148,10 +148,10 @@ func duplicate(params: Dictionary) -> Dictionary:
 
 	var ur := EditorInterface.get_editor_undo_redo()
 	ur.create_action("Duplicate '%s'" % node.name)
-	ur.add_do_method(parent.add_child.bind(dup))
-	ur.add_do_method(dup.set_owner.bind(scene_root))
+	ur.add_do_method(parent, "add_child", dup)
+	ur.add_do_method(dup, "set_owner", scene_root)
 	ur.add_do_reference(dup)
-	ur.add_undo_method(parent.remove_child.bind(dup))
+	ur.add_undo_method(parent, "remove_child", dup)
 	ur.commit_action()
 
 	# Set owner recursively for children
@@ -279,10 +279,10 @@ func reparent(params: Dictionary) -> Dictionary:
 
 	var ur := EditorInterface.get_editor_undo_redo()
 	ur.create_action("Reparent '%s' to '%s'" % [node.name, new_parent])
-	ur.add_do_method(node.reparent.bind(parent, keep_global))
-	ur.add_do_method(node.set_owner.bind(scene_root))
-	ur.add_undo_method(node.reparent.bind(old_parent, keep_global))
-	ur.add_undo_method(node.set_owner.bind(scene_root))
+	ur.add_do_method(node, "reparent", parent, keep_global)
+	ur.add_do_method(node, "set_owner", scene_root)
+	ur.add_undo_method(node, "reparent", old_parent, keep_global)
+	ur.add_undo_method(node, "set_owner", scene_root)
 	ur.commit_action()
 
 	return {"success": true, "new_path": str(node.get_path()), "message": "Reparented '%s' to '%s'" % [node.name, new_parent]}
@@ -338,10 +338,10 @@ func instance_scene(params: Dictionary) -> Dictionary:
 	var scene_root := _get_scene_root()
 	var ur := EditorInterface.get_editor_undo_redo()
 	ur.create_action("Instance '%s'" % scene_path)
-	ur.add_do_method(parent.add_child.bind(instance))
-	ur.add_do_method(instance.set_owner.bind(scene_root))
+	ur.add_do_method(parent, "add_child", instance)
+	ur.add_do_method(instance, "set_owner", scene_root)
 	ur.add_do_reference(instance)
-	ur.add_undo_method(parent.remove_child.bind(instance))
+	ur.add_undo_method(parent, "remove_child", instance)
 	ur.commit_action()
 
 	_set_owner_recursive(instance, scene_root)

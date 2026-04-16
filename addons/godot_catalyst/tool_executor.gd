@@ -57,16 +57,16 @@ func execute(method: String, params: Dictionary) -> Dictionary:
 	if parts.size() < 2:
 		return _make_error(-32601, "Method not found: '%s' (expected 'namespace.action' format)" % method)
 
-	var namespace: String = parts[0]
+	var ns: String = parts[0]
 	var action: String = parts[1]
 
-	if not _handlers.has(namespace):
-		return _make_error(-32601, "Unknown namespace: '%s'. Available: %s" % [namespace, ", ".join(_handlers.keys())])
+	if not _handlers.has(ns):
+		return _make_error(-32601, "Unknown namespace: '%s'. Available: %s" % [ns, ", ".join(_handlers.keys())])
 
-	var handler: RefCounted = _handlers[namespace]
+	var handler: RefCounted = _handlers[ns]
 
 	if not handler.has_method(action):
-		return _make_error(-32601, "Unknown action: '%s.%s'" % [namespace, action])
+		return _make_error(-32601, "Unknown action: '%s.%s'" % [ns, action])
 
 	# Call the handler method
 	var result: Variant = handler.call(action, params)
@@ -77,9 +77,9 @@ func execute(method: String, params: Dictionary) -> Dictionary:
 		return {"success": true, "result": result}
 
 
-func _register_handler(namespace: String, handler: RefCounted) -> void:
+func _register_handler(ns: String, handler: RefCounted) -> void:
 	handler.setup(_plugin)
-	_handlers[namespace] = handler
+	_handlers[ns] = handler
 
 
 func _make_error(code: int, message: String, data: Variant = null) -> Dictionary:

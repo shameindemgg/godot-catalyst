@@ -162,8 +162,8 @@ func set_param(params: Dictionary) -> Dictionary:
 
 	var ur := EditorInterface.get_editor_undo_redo()
 	ur.create_action("Set shader param '%s' on '%s'" % [param_name, node.name])
-	ur.add_do_method(mat.set_shader_parameter.bind(param_name, converted_value))
-	ur.add_undo_method(mat.set_shader_parameter.bind(param_name, mat.get_shader_parameter(param_name)))
+	ur.add_do_method(mat, "set_shader_parameter", param_name, converted_value)
+	ur.add_undo_method(mat, "set_shader_parameter", param_name, mat.get_shader_parameter(param_name))
 	ur.commit_action()
 
 	return {

@@ -28,10 +28,10 @@ func create_http_request(params: Dictionary) -> Dictionary:
 	var scene_root := _get_scene_root()
 	var ur := EditorInterface.get_editor_undo_redo()
 	ur.create_action("Add HTTPRequest '%s'" % node_name)
-	ur.add_do_method(parent.add_child.bind(node))
-	ur.add_do_method(node.set_owner.bind(scene_root))
+	ur.add_do_method(parent, "add_child", node)
+	ur.add_do_method(node, "set_owner", scene_root)
 	ur.add_do_reference(node)
-	ur.add_undo_method(parent.remove_child.bind(node))
+	ur.add_undo_method(parent, "remove_child", node)
 	ur.commit_action()
 
 	return {
@@ -60,10 +60,10 @@ func setup_websocket(params: Dictionary) -> Dictionary:
 	var scene_root := _get_scene_root()
 	var ur := EditorInterface.get_editor_undo_redo()
 	ur.create_action("Add WebSocket '%s'" % node_name)
-	ur.add_do_method(parent.add_child.bind(node))
-	ur.add_do_method(node.set_owner.bind(scene_root))
+	ur.add_do_method(parent, "add_child", node)
+	ur.add_do_method(node, "set_owner", scene_root)
 	ur.add_do_reference(node)
-	ur.add_undo_method(parent.remove_child.bind(node))
+	ur.add_undo_method(parent, "remove_child", node)
 	ur.commit_action()
 
 	return {
@@ -95,10 +95,10 @@ func setup_multiplayer(params: Dictionary) -> Dictionary:
 	var scene_root := _get_scene_root()
 	var ur := EditorInterface.get_editor_undo_redo()
 	ur.create_action("Add MultiplayerManager")
-	ur.add_do_method(parent.add_child.bind(node))
-	ur.add_do_method(node.set_owner.bind(scene_root))
+	ur.add_do_method(parent, "add_child", node)
+	ur.add_do_method(node, "set_owner", scene_root)
 	ur.add_do_reference(node)
-	ur.add_undo_method(parent.remove_child.bind(node))
+	ur.add_undo_method(parent, "remove_child", node)
 	ur.commit_action()
 
 	return {
@@ -162,10 +162,10 @@ func setup_sync(params: Dictionary) -> Dictionary:
 			node.root_path = NodePath(root_path)
 
 		ur.create_action("Add MultiplayerSynchronizer")
-		ur.add_do_method(parent.add_child.bind(node))
-		ur.add_do_method(node.set_owner.bind(scene_root))
+		ur.add_do_method(parent, "add_child", node)
+		ur.add_do_method(node, "set_owner", scene_root)
 		ur.add_do_reference(node)
-		ur.add_undo_method(parent.remove_child.bind(node))
+		ur.add_undo_method(parent, "remove_child", node)
 		ur.commit_action()
 
 		return {
@@ -182,10 +182,10 @@ func setup_sync(params: Dictionary) -> Dictionary:
 			node.spawn_path = NodePath(spawn_path)
 
 		ur.create_action("Add MultiplayerSpawner")
-		ur.add_do_method(parent.add_child.bind(node))
-		ur.add_do_method(node.set_owner.bind(scene_root))
+		ur.add_do_method(parent, "add_child", node)
+		ur.add_do_method(node, "set_owner", scene_root)
 		ur.add_do_reference(node)
-		ur.add_undo_method(parent.remove_child.bind(node))
+		ur.add_undo_method(parent, "remove_child", node)
 		ur.commit_action()
 
 		return {

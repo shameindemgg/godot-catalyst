@@ -135,10 +135,10 @@ func setup_collision(params: Dictionary) -> Dictionary:
 	var scene_root := _get_scene_root()
 	var ur := EditorInterface.get_editor_undo_redo()
 	ur.create_action("Add CollisionShape to '%s'" % body.name)
-	ur.add_do_method(body.add_child.bind(collision_node))
-	ur.add_do_method(collision_node.set_owner.bind(scene_root))
+	ur.add_do_method(body, "add_child", collision_node)
+	ur.add_do_method(collision_node, "set_owner", scene_root)
 	ur.add_do_reference(collision_node)
-	ur.add_undo_method(body.remove_child.bind(collision_node))
+	ur.add_undo_method(body, "remove_child", collision_node)
 	ur.commit_action()
 
 	return {
@@ -236,10 +236,10 @@ func add_raycast(params: Dictionary) -> Dictionary:
 	var scene_root := _get_scene_root()
 	var ur := EditorInterface.get_editor_undo_redo()
 	ur.create_action("Add RayCast to '%s'" % parent.name)
-	ur.add_do_method(parent.add_child.bind(node))
-	ur.add_do_method(node.set_owner.bind(scene_root))
+	ur.add_do_method(parent, "add_child", node)
+	ur.add_do_method(node, "set_owner", scene_root)
 	ur.add_do_reference(node)
-	ur.add_undo_method(parent.remove_child.bind(node))
+	ur.add_undo_method(parent, "remove_child", node)
 	ur.commit_action()
 
 	return {
